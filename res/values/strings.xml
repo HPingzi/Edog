@@ -3,5 +3,18 @@
 
     <string name="app_name">Edog</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title">广告机电子狗</string>
+    <string name="enter_settings">进入设置</string>
+    <string name="save_settings">保存设置</string>
+    <string name="pwd_hint">请输入管理员密码进入选项设置</string>
+    <string name="error_display">对不起，密码错误请重试。</string>
+    <string name="on_edog">电子狗已打开</string>
+    <string name="off_edog">电子狗已关闭</string>
+    <string name="toggle_setting">开关设置：</string>
+    <string name="modify_pwd">修改密码</string>
+    <string name="interval">嗅探频率：</string>
+    <string name="interval_error">嗅探频率不能为空！</string>
+    <string name="second">秒/次</string>
+    <string name="title_activity_setting">SettingActivity</string>
 
 </resources>
