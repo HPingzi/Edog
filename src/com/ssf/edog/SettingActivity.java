@@ -43,23 +43,20 @@ public class SettingActivity extends Activity implements OnClickListener {
 		mSaveSettingBtn = (Button) findViewById(R.id.save_setting);
 		mSaveSettingBtn.setOnClickListener(this);
 
-		mModifyPwdBtn = (Button) findViewById(R.id.modify_pwd);
-		mModifyPwdBtn.setOnClickListener(this);
-
 		mFinishBtn = (ImageView) findViewById(R.id.finish);
 		mFinishBtn.setOnClickListener(this);
 	}
 
 	public void saveSetting() {
-		
+
 		String intervalStr = mIntervalText.getText().toString().trim();
-		
+
 		if (!intervalStr.matches("[0-9]+")) {
 			mIntervalText.setHint(getResources().getString(
 					R.string.interval_error));
 			return;
 		}
-		
+
 		int interval = Integer.parseInt(intervalStr);
 		mPreferenceUtil.saveInterval(interval);
 
@@ -83,9 +80,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 		case R.id.finish:
 			finish();
 			break;
-		case R.id.modify_pwd:
 
-			break;
 		case R.id.save_setting:
 			saveSetting();
 			break;

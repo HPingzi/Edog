@@ -5,35 +5,7 @@
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:background="#7aaa03"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="30dp" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:drawableLeft="@drawable/ic_title"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:text="@string/title"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:src="@drawable/ic_finish" />
-    </FrameLayout>
+    <include layout="@layout/top_title_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,15 +59,11 @@
 
         <Button
             android:id="@+id/enter_setting"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            style="@style/ButtonFont"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/button_selector"
-            android:gravity="center"
-            android:text="@string/enter_settings"
-            android:textColor="#ffffff" />
+            android:text="@string/enter_settings" />
     </RelativeLayout>
 
     <View
@@ -104,10 +72,6 @@
         android:layout_weight="1"
         android:background="#3c3c3c" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_weight="0"
-        android:background="#7aaa03" />
+    <include layout="@layout/bottom_layout" />
 
 </LinearLayout>

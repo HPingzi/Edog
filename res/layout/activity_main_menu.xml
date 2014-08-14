@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3c3c3c"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <include layout="@layout/top_title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="50dp" >
+
+        <Button
+            android:id="@+id/on_off_btn"
+            style="@style/ButtonFont"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="定时开关机设置" />
+
+        <Button
+            android:id="@+id/edog_seting_btn"
+            style="@style/ButtonFont"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="电子狗设置" />
+
+        <Button
+            android:id="@+id/modify_pwd_setting_btn"
+            style="@style/ButtonFont"
+            android:layout_width="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="修改密码" />
+    </LinearLayout>
+
+    <include layout="@layout/bottom_layout" />
+
+</RelativeLayout>

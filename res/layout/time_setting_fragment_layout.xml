@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:padding="50dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/TitleFont"
+                    android:text="定时控制：" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/power_option" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TitleFont"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="关机时间" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/TitleFont"
+                    android:text="\t\t每天"
+                    android:textColor="#bbbbbb" />
+
+                <TextView
+                    android:id="@+id/off_time"
+                    style="@style/TitleFont"
+                    android:layout_width="match_parent"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:onClick="true"
+                    android:text="00：00"
+                    android:textColor="#bbbbbb" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TitleFont"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="定时控制：" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/TitleFont"
+                    android:text="\t\t每天"
+                    android:textColor="#bbbbbb" />
+
+                <TextView
+                    android:id="@+id/on_time"
+                    style="@style/TitleFont"
+                    android:layout_width="match_parent"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:onClick="true"
+                    android:text="00：00"
+                    android:textColor="#bbbbbb" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/ButtonFont"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/save_settings" />
+    </RelativeLayout>
+
+</LinearLayout>

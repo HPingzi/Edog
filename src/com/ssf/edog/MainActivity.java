@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			clear();
 
-			Intent intent = new Intent(this, SettingActivity.class);
+			Intent intent = new Intent(this, MainMenuActivity.class);
 			startActivity(intent);
 
 		} else {

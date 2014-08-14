@@ -28,13 +28,15 @@
                     style="@style/TitleFont"
                     android:text="@string/toggle_setting" />
 
-                <ToggleButton
-                    android:id="@+id/toogle"
+                <EditText
+                    android:id="@+id/old_pwd"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textOff="@string/off_edog"
-                    android:textOn="@string/on_edog"
+                    android:layout_height="40dp"
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:src="@drawable/clear"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -60,11 +62,28 @@
                     android:src="@drawable/clear"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal" >
 
                 <TextView
                     style="@style/TitleFont"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/second" />
+                    android:text="@string/interval" />
+
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:background="#ffffff"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:src="@drawable/clear"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
