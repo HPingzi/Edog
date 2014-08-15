@@ -26,4 +26,14 @@
         <item>定时关机</item>
     </string-array>
 
+    <string name="timing_control">定时控制：</string>
+    <string name="off_time">关机时间：</string>
+    <string name="on_time">开机时间：</string>
+    <string name="every_day">"\t\t每天"</string>
+    <string name="old_pwd">"旧  密  码："</string>
+    <string name="new_pwd">"新  密  码："</string>
+    <string name="timing_on_off_setting">定时开关机设置</string>
+    <string name="edog_setting">电子狗设置</string>
+    <string name="timing_reboot">定时重启：</string>
+
 </resources>

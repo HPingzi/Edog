@@ -21,7 +21,7 @@
             android:layout_marginBottom="20dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="定时开关机设置" />
+            android:text="@string/timing_on_off_setting" />
 
         <Button
             android:id="@+id/edog_seting_btn"
@@ -30,7 +30,7 @@
             android:layout_marginBottom="20dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="电子狗设置" />
+            android:text="@string/edog_setting" />
 
         <Button
             android:id="@+id/modify_pwd_setting_btn"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="修改密码" />
+            android:text="@string/modify_pwd" />
     </LinearLayout>
 
     <include layout="@layout/bottom_layout" />

@@ -19,7 +19,6 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ToggleButton mToggleButton;
 	private EditText mIntervalText;
 	private Button mSaveSettingBtn;
-	private Button mModifyPwdBtn;
 	private ImageView mFinishBtn;
 	private SharedPreferenceUtil mPreferenceUtil;
 

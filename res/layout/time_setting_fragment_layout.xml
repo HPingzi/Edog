@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#3c3c3c">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
 
                 <TextView
                     style="@style/TitleFont"
-                    android:text="定时控制：" />
+                    android:text="@string/timing_control" />
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -36,12 +37,14 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/off_time_lable"
                 style="@style/TitleFont"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="关机时间" />
+                android:text="@string/off_time" />
 
             <LinearLayout
+                android:id="@+id/off_time_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -50,7 +53,7 @@
 
                 <TextView
                     style="@style/TitleFont"
-                    android:text="\t\t每天"
+                    android:text="@string/every_day"
                     android:textColor="#bbbbbb" />
 
                 <TextView
@@ -65,12 +68,14 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/on_time_lable"
                 style="@style/TitleFont"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="定时控制：" />
+                android:text="@string/on_time" />
 
             <LinearLayout
+                android:id="@+id/on_time_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -80,7 +85,7 @@
 
                 <TextView
                     style="@style/TitleFont"
-                    android:text="\t\t每天"
+                    android:text="@string/every_day"
                     android:textColor="#bbbbbb" />
 
                 <TextView

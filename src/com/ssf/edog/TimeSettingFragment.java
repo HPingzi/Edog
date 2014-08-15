@@ -17,6 +17,10 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 	private Spinner mSpinner;
 	private TextView mOnTimeBtn;
 	private TextView mOffTimeBtn;
+	private TextView mOnTimeLable;
+	private TextView mOffTimeLabel;
+	private View mOnTimeContainer;
+	private View mOffTimeContainer;
 	private TimePickerDialog mPickDialog;
 
 	@Override
@@ -26,7 +30,14 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 	public void initView() {
 		mSpinner = (Spinner) getView().findViewById(R.id.spinner);
+		mSpinner.setSelection(0);
 		mSpinner.setOnItemSelectedListener(this);
+
+		mOnTimeContainer = getView().findViewById(R.id.on_time_container);
+		mOffTimeContainer = getView().findViewById(R.id.off_time_container);
+
+		mOnTimeLable = (TextView) getView().findViewById(R.id.on_time_lable);
+		mOffTimeLabel = (TextView) getView().findViewById(R.id.off_time_lable);
 
 		mOnTimeBtn = (TextView) getView().findViewById(R.id.on_time);
 		mOnTimeBtn.setOnClickListener(this);
@@ -59,7 +70,17 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		((SwitchFragment) getActivity()).switchToNextFragmet(position);
+		switch (position) {
+		case 0:
+			switchTimingOnAndOff();
+			break;
+		case 1:
+			switchTimingReboot();
+			break;
+		case 2:
+			switchTimingOff();
+			break;
+		}
 
 	}
 
@@ -67,4 +88,33 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 	public void onNothingSelected(AdapterView<?> parent) {
 
 	}
+
+	private void switchTimingOff() {
+
+		mOnTimeContainer.setVisibility(View.GONE);
+		mOnTimeLable.setVisibility(View.GONE);
+
+		mOffTimeContainer.setVisibility(View.VISIBLE);
+		mOffTimeLabel.setVisibility(View.VISIBLE);
+
+	}
+
+	private void switchTimingOnAndOff() {
+		mOnTimeContainer.setVisibility(View.VISIBLE);
+		mOnTimeLable.setVisibility(View.VISIBLE);
+		mOnTimeLable.setText(R.string.on_time);
+
+		mOffTimeContainer.setVisibility(View.VISIBLE);
+		mOffTimeLabel.setVisibility(View.VISIBLE);
+	}
+
+	private void switchTimingReboot() {
+		mOnTimeContainer.setVisibility(View.VISIBLE);
+		mOnTimeLable.setVisibility(View.VISIBLE);
+		mOnTimeLable.setText(R.string.timing_reboot);
+
+		mOffTimeContainer.setVisibility(View.GONE);
+		mOffTimeLabel.setVisibility(View.GONE);
+	}
+
 }
