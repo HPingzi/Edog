@@ -15,11 +15,12 @@ import com.ssf.edog.util.SharedPreferenceUtil;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	private ImageView mFinishBtn;
-	private ImageView mClearBtn;
-	private Button mEnterSetting;
-	private EditText mPwdText;
-	private TextView mErrorDisplay;
+	private ImageView mFinishBtn;// 退出程序按钮
+	private ImageView mClearBtn;// 用于清空密码输入框内容的按钮
+
+	private Button mEnterSetting;// 用户设置按钮
+	private EditText mPwdText;// 用户密码框
+	private TextView mErrorDisplay;// 显示错误信息
 
 	private SharedPreferenceUtil mPreferenceUtil;
 
@@ -32,6 +33,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		initView();
 	}
 
+	/**
+	 * 初始化UI组件
+	 */
 	public void initView() {
 
 		mFinishBtn = (ImageView) findViewById(R.id.finish);
@@ -47,6 +51,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		mPwdText = (EditText) findViewById(R.id.password_text);
 	}
 
+	/**
+	 * 验证用户密码，如果密码正确则进入到菜单页面，否则显示错误信息
+	 */
 	public void verifyPassword() {
 
 		String pwd = mPwdText.getText().toString().trim();
@@ -66,6 +73,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * 清除显示的错误信息
+	 */
 	public void clear() {
 		mErrorDisplay.setText(null);
 		mPwdText.setText(null);

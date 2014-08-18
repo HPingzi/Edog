@@ -107,7 +107,7 @@
         android:layout_weight="1" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/save_setting"
             style="@style/ButtonFont"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"

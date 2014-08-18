@@ -7,9 +7,9 @@ import android.widget.Button;
 
 public class MainMenuActivity extends BaseActivity implements OnClickListener {
 
-	private Button mPowerBtn;
-	private Button mEdogBtn;
-	private Button mPwdSettingBtn;
+	private Button mPowerBtn;// 自动开关机设置按钮
+	private Button mEdogBtn;// 电子狗设置按钮
+	private Button mPwdSettingBtn;// 密码设置按钮
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,9 @@ public class MainMenuActivity extends BaseActivity implements OnClickListener {
 		initView();
 	}
 
+	/**
+	 * 初始化UI组件
+	 */
 	public void initView() {
 		mPowerBtn = (Button) findViewById(R.id.on_off_btn);
 		mPowerBtn.setOnClickListener(this);
