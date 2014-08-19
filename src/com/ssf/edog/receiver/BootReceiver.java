@@ -2,6 +2,7 @@ package com.ssf.edog.receiver;
 
 import com.ssf.edog.config.Config;
 import com.ssf.edog.service.EdogService;
+import com.ssf.edog.util.MachineUtil;
 import com.ssf.edog.util.SharedPreferenceUtil;
 import com.ssf.edog.util.TimeUtils;
 
@@ -15,6 +16,7 @@ public class BootReceiver extends BroadcastReceiver {
 
 	private AlarmManager mAlarmManager;
 	private SharedPreferenceUtil mPreferenceUtil;
+	private MachineUtil mMachineUtil;
 
 	public BootReceiver() {
 	}
@@ -25,6 +27,7 @@ public class BootReceiver extends BroadcastReceiver {
 		mAlarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		mPreferenceUtil = new SharedPreferenceUtil(context);
+		mMachineUtil = new MachineUtil();
 
 		Intent newIntent = new Intent(Config.SWITCH_ACTION);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
@@ -52,7 +55,16 @@ public class BootReceiver extends BroadcastReceiver {
 
 				break;
 			case SharedPreferenceUtil.AUTO_ON_OFF:
-
+				mMachineUtil.close();
+				int offHour = mPreferenceUtil.getOffHour();
+				int offMinute = mPreferenceUtil.getOffMinute();
+				int onHour = mPreferenceUtil.getOnHour();
+				int onMinute = mPreferenceUtil.getOnMinute();
+				mMachineUtil.setBoffh((byte) offHour);
+				mMachineUtil.setBoffm((byte) offMinute);
+				mMachineUtil.setBonh((byte) onHour);
+				mMachineUtil.setBonm((byte) onMinute);
+				mMachineUtil.openMachine();
 				break;
 
 			default:

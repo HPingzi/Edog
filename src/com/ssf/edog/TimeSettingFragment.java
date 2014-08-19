@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.ssf.edog.config.Config;
-import com.ssf.edog.service.SwitchService;
+import com.ssf.edog.util.MachineUtil;
 import com.ssf.edog.util.SharedPreferenceUtil;
 import com.ssf.edog.util.TimeUtils;
 
@@ -94,6 +94,8 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 		mSaveSettingBtn = (Button) getView().findViewById(R.id.save_setting);
 		mSaveSettingBtn.setOnClickListener(this);
 
+		initDisplayTime();
+
 		mPickOnTimeDialog = new TimePickerDialog(getActivity(),
 				new OnTimeSetListener() {
 
@@ -102,9 +104,10 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 							int minute) {
 						mOnHour = hourOfDay;
 						mOnMinute = minute;
+						mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
+
 					}
-				}, mPreferenceUtil.getOnHour(), mPreferenceUtil.getOnMinute(),
-				true);
+				}, mOnHour, mOnMinute, true);
 
 		mPickOffTimeDialog = new TimePickerDialog(getActivity(),
 				new OnTimeSetListener() {
@@ -114,10 +117,12 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 							int minute) {
 						mOffHour = hourOfDay;
 						mOffMinute = minute;
+						mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
 
 					}
-				}, mPreferenceUtil.getOnHour(), mPreferenceUtil.getOffMinute(),
-				true);
+				}, mOffHour, mOffMinute, true);
+
+		mSpinner.setSelection(mPreferenceUtil.getType());
 
 	}
 
@@ -176,6 +181,8 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			break;
 		}
 
+		initDisplayTime();
+
 	}
 
 	@Override
@@ -183,11 +190,42 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 	}
 
+	public void initDisplayTime() {
+		switch (mPreferenceUtil.getType()) {
+
+		case SharedPreferenceUtil.AUTO_OFF:
+			mOffHour = mPreferenceUtil.getOffHour();
+			mOffMinute = mPreferenceUtil.getOffMinute();
+			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
+
+			break;
+		case SharedPreferenceUtil.AUTO_REBOOT:
+			mOnHour = mPreferenceUtil.getRebootHour();
+			mOnMinute = mPreferenceUtil.getRebootMinute();
+			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
+
+			break;
+		case SharedPreferenceUtil.AUTO_ON_OFF:
+
+			mOnHour = mPreferenceUtil.getOnHour();
+			mOnMinute = mPreferenceUtil.getOnMinute();
+			mOffHour = mPreferenceUtil.getOffHour();
+			mOffMinute = mPreferenceUtil.getOffMinute();
+			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
+			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
+			break;
+
+		default:
+			break;
+		}
+	}
+
 	private void saveSetting() {
 
 		Intent intent = new Intent(Config.SWITCH_ACTION);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),
 				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
 		switch (mSpinner.getSelectedItemPosition()) {
 
 		case 0: {
@@ -196,6 +234,12 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mPreferenceUtil.setOffHour(mOffHour);
 			mPreferenceUtil.setOffMinute(mOffMinute);
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_ON_OFF);
+			MachineUtil machineUtil = new MachineUtil();
+			machineUtil.setBonh((byte) mOnHour);
+			machineUtil.setBonm((byte) mOnMinute);
+			machineUtil.setBoffh((byte) mOffHour);
+			machineUtil.setBoffm((byte) mOffMinute);
+			machineUtil.openMachine();
 
 		}
 			break;
@@ -203,6 +247,7 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mPreferenceUtil.setRebootHour(mOnHour);
 			mPreferenceUtil.setRebootMinute(mOnMinute);
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_REBOOT);
+			mAlarmManager.cancel(pendingIntent);
 			mAlarmManager.set(AlarmManager.RTC_WAKEUP,
 					TimeUtils.calculateRebootTime(mOnHour, mOnMinute),
 					pendingIntent);
@@ -212,11 +257,11 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mPreferenceUtil.setOffHour(mOffHour);
 			mPreferenceUtil.setOffMinute(mOffMinute);
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_OFF);
-
+			mAlarmManager.cancel(pendingIntent);
 			mAlarmManager.set(AlarmManager.RTC_WAKEUP,
 					TimeUtils.calculateRebootTime(mOffHour, mOffMinute),
 					pendingIntent);
-			
+
 		}
 			break;
 

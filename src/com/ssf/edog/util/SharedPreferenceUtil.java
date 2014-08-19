@@ -49,9 +49,10 @@ public class SharedPreferenceUtil {
 	public static final String TYPE_KEY = "type";
 	public static final String IS_ENABLE_KEY = "is_enable_key";
 
-	public static final int AUTO_ON_OFF = 1;
+	public static final int AUTO_ON_OFF = 0;
+	public static final int AUTO_REBOOT = 1;
 	public static final int AUTO_OFF = 2;
-	public static final int AUTO_REBOOT = 3;
+	
 
 	private SharedPreferences mSharedPreferences;
 
@@ -129,7 +130,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getType() {
-		return mSharedPreferences.getInt(TYPE_KEY, -1);
+		return mSharedPreferences.getInt(TYPE_KEY, 0);
 	}
 
 	public void setEnable(boolean enable) {
