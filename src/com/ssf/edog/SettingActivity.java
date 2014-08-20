@@ -1,6 +1,7 @@
 package com.ssf.edog;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,8 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private Button mSaveSettingBtn;
 	private ImageView mFinishBtn;
 	private SharedPreferenceUtil mPreferenceUtil;
+
+	private AlertDialog mAlertDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 		mFinishBtn = (ImageView) findViewById(R.id.finish);
 		mFinishBtn.setOnClickListener(this);
+
+		mAlertDialog = new AlertDialog.Builder(this)
+				.setNeutralButton(getString(R.string.confirm), null)
+				.setTitle(getString(R.string.info_prompt_title)).create();
 	}
 
 	public void saveSetting() {
@@ -57,6 +64,11 @@ public class SettingActivity extends Activity implements OnClickListener {
 		}
 
 		int interval = Integer.parseInt(intervalStr);
+		if (interval < 3) {
+			mIntervalText.setError(getString(R.string.second_than_three_large));
+			mIntervalText.requestFocus();
+			return;
+		}
 		mPreferenceUtil.saveInterval(interval);
 
 		boolean toggle = mToggleButton.isChecked();
@@ -69,6 +81,9 @@ public class SettingActivity extends Activity implements OnClickListener {
 		if (toggle) {
 			startService(intent);
 		}
+
+		mAlertDialog.setMessage(getString(R.string.setting_success));
+		mAlertDialog.show();
 
 	}
 

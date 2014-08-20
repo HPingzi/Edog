@@ -2,6 +2,7 @@ package com.ssf.edog;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -19,7 +20,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
 import com.ssf.edog.config.Config;
 import com.ssf.edog.util.MachineUtil;
 import com.ssf.edog.util.SharedPreferenceUtil;
@@ -27,7 +27,7 @@ import com.ssf.edog.util.TimeUtils;
 
 @SuppressLint("NewApi")
 public class TimeSettingFragment extends Fragment implements OnClickListener,
-		OnItemSelectedListener {
+		OnItemSelectedListener, MachineUtil.OnStateListener {
 
 	private Spinner mSpinner;
 
@@ -45,9 +45,15 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 	private Button mSaveSettingBtn;
 
+	private TextView mAlertTextView;
+
 	private SharedPreferenceUtil mPreferenceUtil;
 
 	private AlarmManager mAlarmManager;
+
+	private AlertDialog mAlertDialog;
+
+	MachineUtil mMachineUtil;
 
 	/**
 	 * 开机时间
@@ -68,6 +74,8 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mPreferenceUtil = new SharedPreferenceUtil(getActivity());
 			mAlarmManager = (AlarmManager) getActivity().getSystemService(
 					Context.ALARM_SERVICE);
+			mMachineUtil = new MachineUtil();
+			mMachineUtil.setOnStateListener(this);
 		}
 	}
 
@@ -94,7 +102,13 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 		mSaveSettingBtn = (Button) getView().findViewById(R.id.save_setting);
 		mSaveSettingBtn.setOnClickListener(this);
 
-		initDisplayTime();
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setNeutralButton(getString(R.string.confirm), null);
+		mAlertDialog = builder.create();
+
+		mAlertTextView = (TextView) getView().findViewById(R.id.alert);
+
+		initDisplayTime(mPreferenceUtil.getType());
 
 		mPickOnTimeDialog = new TimePickerDialog(getActivity(),
 				new OnTimeSetListener() {
@@ -102,8 +116,10 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 					@Override
 					public void onTimeSet(TimePicker view, int hourOfDay,
 							int minute) {
+
 						mOnHour = hourOfDay;
 						mOnMinute = minute;
+
 						mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
 
 					}
@@ -115,8 +131,10 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 					@Override
 					public void onTimeSet(TimePicker view, int hourOfDay,
 							int minute) {
+
 						mOffHour = hourOfDay;
 						mOffMinute = minute;
+
 						mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
 
 					}
@@ -150,13 +168,13 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			break;
 		case R.id.on_time:
 
-			mPickOnTimeDialog.setCancelable(false);
+			mPickOnTimeDialog.setCancelable(true);
 			mPickOnTimeDialog.show();
 
 			break;
 		case R.id.off_time:
 
-			mPickOffTimeDialog.setCancelable(false);
+			mPickOffTimeDialog.setCancelable(true);
 			mPickOffTimeDialog.show();
 
 			break;
@@ -171,17 +189,20 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			long id) {
 		switch (position) {
 		case 0:
-			switchTimingOnAndOff();
+			closeTimingOption();
 			break;
 		case 1:
-			switchTimingReboot();
+			switchTimingOnAndOff();
 			break;
 		case 2:
+			switchTimingReboot();
+			break;
+		case 3:
 			switchTimingOff();
 			break;
 		}
 
-		initDisplayTime();
+		initDisplayTime(position);
 
 	}
 
@@ -190,18 +211,22 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 	}
 
-	public void initDisplayTime() {
-		switch (mPreferenceUtil.getType()) {
+	public void initDisplayTime(int position) {
+		switch (position) {
 
 		case SharedPreferenceUtil.AUTO_OFF:
+
 			mOffHour = mPreferenceUtil.getOffHour();
 			mOffMinute = mPreferenceUtil.getOffMinute();
+
 			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
 
 			break;
 		case SharedPreferenceUtil.AUTO_REBOOT:
+
 			mOnHour = mPreferenceUtil.getRebootHour();
 			mOnMinute = mPreferenceUtil.getRebootMinute();
+
 			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
 
 			break;
@@ -209,10 +234,13 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 			mOnHour = mPreferenceUtil.getOnHour();
 			mOnMinute = mPreferenceUtil.getOnMinute();
+
 			mOffHour = mPreferenceUtil.getOffHour();
 			mOffMinute = mPreferenceUtil.getOffMinute();
-			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
+
 			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
+			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
+
 			break;
 
 		default:
@@ -223,44 +251,78 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 	private void saveSetting() {
 
 		Intent intent = new Intent(Config.SWITCH_ACTION);
+
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),
 				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		mAlarmManager.cancel(pendingIntent);
+		mMachineUtil.close();
 
 		switch (mSpinner.getSelectedItemPosition()) {
 
 		case 0: {
+
+			mPreferenceUtil.setType(SharedPreferenceUtil.CLOSE_SETTING);
+			mAlertDialog.setTitle(getResources().getString(
+					R.string.info_prompt_title));
+			mAlertDialog.setMessage(getResources().getString(
+					R.string.close_timing_option));
+			mAlertDialog.show();
+		}
+			break;
+
+		case 1: {
+
 			mPreferenceUtil.setOnHour(mOnHour);
 			mPreferenceUtil.setOnMinute(mOnMinute);
+
 			mPreferenceUtil.setOffHour(mOffHour);
 			mPreferenceUtil.setOffMinute(mOffMinute);
+
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_ON_OFF);
-			MachineUtil machineUtil = new MachineUtil();
-			machineUtil.setBonh((byte) mOnHour);
-			machineUtil.setBonm((byte) mOnMinute);
-			machineUtil.setBoffh((byte) mOffHour);
-			machineUtil.setBoffm((byte) mOffMinute);
-			machineUtil.openMachine();
+
+			mMachineUtil.setBonh((byte) mOnHour);
+			mMachineUtil.setBonm((byte) mOnMinute);
+
+			mMachineUtil.setBoffh((byte) mOffHour);
+			mMachineUtil.setBoffm((byte) mOffMinute);
+
+			mMachineUtil.openMachine();
 
 		}
 			break;
-		case 1: {
+		case 2: {
+
 			mPreferenceUtil.setRebootHour(mOnHour);
 			mPreferenceUtil.setRebootMinute(mOnMinute);
+
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_REBOOT);
-			mAlarmManager.cancel(pendingIntent);
+
 			mAlarmManager.set(AlarmManager.RTC_WAKEUP,
 					TimeUtils.calculateRebootTime(mOnHour, mOnMinute),
 					pendingIntent);
+			mAlertDialog.setTitle(getResources().getString(
+					R.string.info_prompt_title));
+			mAlertDialog.setMessage(getResources().getString(
+					R.string.timing_reboot_msg));
+			mAlertDialog.show();
+
 		}
 			break;
-		case 2: {
+		case 3: {
+
 			mPreferenceUtil.setOffHour(mOffHour);
 			mPreferenceUtil.setOffMinute(mOffMinute);
+
 			mPreferenceUtil.setType(SharedPreferenceUtil.AUTO_OFF);
-			mAlarmManager.cancel(pendingIntent);
+
 			mAlarmManager.set(AlarmManager.RTC_WAKEUP,
 					TimeUtils.calculateRebootTime(mOffHour, mOffMinute),
 					pendingIntent);
+			mAlertDialog.setTitle(getResources().getString(
+					R.string.info_prompt_title));
+			mAlertDialog.setMessage(getResources().getString(
+					R.string.timing_on_off_msg));
+			mAlertDialog.show();
 
 		}
 			break;
@@ -277,6 +339,8 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 		mOffTimeContainer.setVisibility(View.VISIBLE);
 		mOffTimeLabel.setVisibility(View.VISIBLE);
 
+		mAlertTextView.setVisibility(View.INVISIBLE);
+
 	}
 
 	private void switchTimingOnAndOff() {
@@ -288,6 +352,8 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 		mOffTimeContainer.setVisibility(View.VISIBLE);
 		mOffTimeLabel.setVisibility(View.VISIBLE);
 
+		mAlertTextView.setVisibility(View.VISIBLE);
+
 	}
 
 	private void switchTimingReboot() {
@@ -298,6 +364,39 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 
 		mOffTimeContainer.setVisibility(View.GONE);
 		mOffTimeLabel.setVisibility(View.GONE);
+
+		mAlertTextView.setVisibility(View.INVISIBLE);
+	}
+
+	private void closeTimingOption() {
+
+		mOnTimeContainer.setVisibility(View.GONE);
+		mOnTimeLable.setVisibility(View.GONE);
+
+		mOffTimeContainer.setVisibility(View.GONE);
+		mOffTimeLabel.setVisibility(View.GONE);
+
+		mAlertTextView.setVisibility(View.INVISIBLE);
+	}
+
+	@Override
+	public void onError(String msg) {
+
+		mAlertDialog.setTitle(getResources().getString(
+				R.string.error_prompt_title));
+		mAlertDialog.setMessage(msg);
+		mAlertDialog.show();
+
+	}
+
+	@Override
+	public void onSccessful(String msg) {
+
+		mAlertDialog.setTitle(getResources().getString(
+				R.string.info_prompt_title));
+		mAlertDialog.setMessage(msg);
+		mAlertDialog.show();
+
 	}
 
 }

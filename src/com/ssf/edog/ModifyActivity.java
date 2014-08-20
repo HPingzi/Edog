@@ -3,22 +3,26 @@ package com.ssf.edog;
 import com.ssf.edog.util.SharedPreferenceUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class ModifyActivity extends Activity implements OnClickListener {
 
 	private EditText mOldPwdEdt;
 	private EditText mNewPwdEdt;
-	private EditText mReNewPwdEdt;
 	private Button mSaveButton;
+
+	private ImageView mFinishBtn;// ÍË³ö³ÌÐò°´Å¥
 
 	private String mOldPwd;
 	private String mNewPwd;
-	private String mReNewPwd;
+
+	private AlertDialog mAlertDialog;
 
 	private SharedPreferenceUtil mPreferenceUtil;
 
@@ -34,16 +38,21 @@ public class ModifyActivity extends Activity implements OnClickListener {
 
 		mOldPwdEdt = (EditText) findViewById(R.id.old_pwd);
 		mNewPwdEdt = (EditText) findViewById(R.id.new_pwd);
-		mReNewPwdEdt = (EditText) findViewById(R.id.re_new_pwd);
 
 		mSaveButton = (Button) findViewById(R.id.save_setting);
 		mSaveButton.setOnClickListener(this);
+
+		mFinishBtn = (ImageView) findViewById(R.id.finish);
+		mFinishBtn.setOnClickListener(this);
+
+		mAlertDialog = new AlertDialog.Builder(this).setNeutralButton(
+				getString(R.string.confirm), null).create();
 	}
 
 	private void initData() {
 		mOldPwd = mOldPwdEdt.getText().toString().trim();
 		mNewPwd = mNewPwdEdt.getText().toString().trim();
-		mReNewPwd = mReNewPwdEdt.getText().toString().trim();
+
 	}
 
 	@Override
@@ -53,13 +62,20 @@ public class ModifyActivity extends Activity implements OnClickListener {
 		case R.id.save_setting: {
 			initData();
 
-			if (verifyOldPassword(mOldPwd)
-					&& verifyNewPassword(mNewPwd, mReNewPwd)) {
+			if (verifyOldPassword(mOldPwd) && verifyNewPassword(mNewPwd)) {
 				mPreferenceUtil.savePassword(mNewPwd);
+				mAlertDialog
+						.setMessage(getString(R.string.modify_password_success));
+				mAlertDialog.show();
 			}
 		}
 			break;
 
+		case R.id.finish:
+
+			finish();
+
+			break;
 		default:
 			break;
 		}
@@ -71,28 +87,32 @@ public class ModifyActivity extends Activity implements OnClickListener {
 		if (pwd != null && pwd.equals(mPreferenceUtil.getPassword())) {
 			return true;
 		}
+
+		mOldPwdEdt.setError(getString(R.string.password_is_error));
+		mOldPwdEdt.requestFocus();
+
 		return false;
 	}
 
-	private boolean verifyNewPassword(String newPwd, String reNewPwd) {
+	private boolean verifyNewPassword(String newPwd) {
 
 		if (newPwd == null || "".equals(newPwd)) {
 
+			mNewPwdEdt.setError(getString(R.string.password_can_not_null));
+			mNewPwdEdt.requestFocus();
+
+			return false;
+
 		} else if (newPwd.length() < 4) {
 
-		}
-
-		if (reNewPwd == null || "".equals(reNewPwd)) {
+			mNewPwdEdt
+					.setError(getString(R.string.password_must_than_length_than_four_big));
+			mNewPwdEdt.requestFocus();
 			return false;
-		} else if (reNewPwd.length() < 4) {
-			return false;
+
 		}
 
-		if (newPwd.equals(reNewPwd)) {
-			return true;
-		}
-
-		return false;
+		return true;
 
 	}
 }

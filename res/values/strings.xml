@@ -21,6 +21,7 @@
     <string name="title_activity_time_setting">TimeSettingActivity</string>
 
     <string-array name="power_option">
+        <item>关闭定时选项</item>
         <item>定时开关机</item>
         <item>定时重启</item>
         <item>定时关机</item>
@@ -35,5 +36,19 @@
     <string name="timing_on_off_setting">定时开关机设置</string>
     <string name="edog_setting">电子狗设置</string>
     <string name="timing_reboot">定时重启：</string>
+    <string name="setting_alert">"PS:1.定时开关机的间隔不得少于3分钟  \n       2.定时开关机存在1分钟误差  \n       "</string>
+    <string name="info_prompt_title">消息提示</string>
+    <string name="error_prompt_title">错误提示</string>
+    <string name="timing_reboot_msg">定时重启设置成功</string>
+    <string name="timing_off_msg">定时关机设置成功</string>
+    <string name="timing_on_off_msg">定时开关机设置成功</string>
+    <string name="modify_password_success">修改密码成功</string>
+    <string name="password_is_error">密码错误,请重新输入</string>
+    <string name="password_can_not_null">密码不能为空</string>
+    <string name="password_must_than_length_than_four_big">密码长度不能小于4</string>
+    <string name="confirm">确定</string>
+    <string name="second_than_three_large">"嗅探频率不能小于3秒/次"</string>
+    <string name="setting_success">设置成功</string>
+    <string name="close_timing_option">已关闭定时选项</string>
 
 </resources>

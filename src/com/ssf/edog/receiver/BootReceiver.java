@@ -26,27 +26,34 @@ public class BootReceiver extends BroadcastReceiver {
 
 		mAlarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
+
 		mPreferenceUtil = new SharedPreferenceUtil(context);
 		mMachineUtil = new MachineUtil();
+		mMachineUtil.close();
 
 		Intent newIntent = new Intent(Config.SWITCH_ACTION);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
 				newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		mAlarmManager.cancel(pendingIntent);
 
 		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
-			context.startService(new Intent(context, EdogService.class));
+			if (mPreferenceUtil.isEnable()) {
+				context.startService(new Intent(context, EdogService.class));
+			}
 
 			switch (mPreferenceUtil.getType()) {
+
 			case SharedPreferenceUtil.AUTO_REBOOT:
-				mAlarmManager.cancel(pendingIntent);
+
 				mAlarmManager.set(AlarmManager.RTC_WAKEUP, TimeUtils
 						.calculateRebootTime(mPreferenceUtil.getRebootHour(),
 								mPreferenceUtil.getRebootMinute()),
 						pendingIntent);
+
 				break;
 			case SharedPreferenceUtil.AUTO_OFF:
-				mAlarmManager.cancel(pendingIntent);
+
 				mAlarmManager.set(
 						AlarmManager.RTC_WAKEUP,
 						TimeUtils.calculateRebootTime(
@@ -55,16 +62,19 @@ public class BootReceiver extends BroadcastReceiver {
 
 				break;
 			case SharedPreferenceUtil.AUTO_ON_OFF:
-				mMachineUtil.close();
+
 				int offHour = mPreferenceUtil.getOffHour();
 				int offMinute = mPreferenceUtil.getOffMinute();
 				int onHour = mPreferenceUtil.getOnHour();
 				int onMinute = mPreferenceUtil.getOnMinute();
+
 				mMachineUtil.setBoffh((byte) offHour);
 				mMachineUtil.setBoffm((byte) offMinute);
 				mMachineUtil.setBonh((byte) onHour);
 				mMachineUtil.setBonm((byte) onMinute);
+
 				mMachineUtil.openMachine();
+
 				break;
 
 			default:

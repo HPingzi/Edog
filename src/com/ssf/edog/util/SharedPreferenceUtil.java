@@ -49,10 +49,10 @@ public class SharedPreferenceUtil {
 	public static final String TYPE_KEY = "type";
 	public static final String IS_ENABLE_KEY = "is_enable_key";
 
-	public static final int AUTO_ON_OFF = 0;
-	public static final int AUTO_REBOOT = 1;
-	public static final int AUTO_OFF = 2;
-	
+	public static final int CLOSE_SETTING = 0;
+	public static final int AUTO_ON_OFF = 1;
+	public static final int AUTO_REBOOT = 2;
+	public static final int AUTO_OFF = 3;
 
 	private SharedPreferences mSharedPreferences;
 
@@ -68,7 +68,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getOnHour() {
-		return mSharedPreferences.getInt(ON_HOUR_KEY, -1);
+		return mSharedPreferences.getInt(ON_HOUR_KEY, 0);
 	}
 
 	public void setOnMinute(int minute) {
@@ -78,7 +78,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getOnMinute() {
-		return mSharedPreferences.getInt(ON_MINUTE_KEY, -1);
+		return mSharedPreferences.getInt(ON_MINUTE_KEY, 0);
 	}
 
 	public void setOffHour(int hour) {
@@ -88,7 +88,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getOffHour() {
-		return mSharedPreferences.getInt(OFF_HOUR_KEY, -1);
+		return mSharedPreferences.getInt(OFF_HOUR_KEY, 0);
 	}
 
 	public void setOffMinute(int minute) {
@@ -98,7 +98,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getOffMinute() {
-		return mSharedPreferences.getInt(OFF_MINUTE_KEY, -1);
+		return mSharedPreferences.getInt(OFF_MINUTE_KEY, 0);
 	}
 
 	public void setRebootHour(int hour) {
@@ -108,7 +108,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getRebootHour() {
-		return mSharedPreferences.getInt(REBOOT_HOUR_KEY, -1);
+		return mSharedPreferences.getInt(REBOOT_HOUR_KEY, 0);
 	}
 
 	public void setRebootMinute(int minute) {
@@ -118,7 +118,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getRebootMinute() {
-		return mSharedPreferences.getInt(REBOOT_MINUTE_KEY, -1);
+		return mSharedPreferences.getInt(REBOOT_MINUTE_KEY, 0);
 	}
 
 	public void setType(int type) {
@@ -130,7 +130,7 @@ public class SharedPreferenceUtil {
 	}
 
 	public int getType() {
-		return mSharedPreferences.getInt(TYPE_KEY, 0);
+		return mSharedPreferences.getInt(TYPE_KEY, CLOSE_SETTING);
 	}
 
 	public void setEnable(boolean enable) {
