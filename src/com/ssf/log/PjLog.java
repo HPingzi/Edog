@@ -88,8 +88,8 @@ public class PjLog {
 			} else {
 				Log.v(tag, msg);
 			}
-			if (MYLOG_WRITE_TO_FILE)
-				writeLogtoFile(String.valueOf(level), tag, msg);
+//			if (MYLOG_WRITE_TO_FILE)
+//				writeLogtoFile(String.valueOf(level), tag, msg);
 		}
 	}
 

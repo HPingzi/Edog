@@ -79,6 +79,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 		stopService(intent);
 
 		if (toggle) {
+			mPreferenceUtil.setEnable(true);
 			startService(intent);
 		}
 

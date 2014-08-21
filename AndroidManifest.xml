@@ -51,7 +51,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.ssf.edog.receiver.SwitchReceiver"
+            android:name=".receiver.SwitchReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
@@ -77,10 +77,24 @@
         </activity>
 
         <service
-            android:name="com.ssf.edog.service.SwitchService"
+            android:name=".service.SwitchService"
             android:enabled="true"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".KeyguardActivity"
+            android:label="@string/title_activity_keyguard" >
+        </activity>
+
+        <receiver
+            android:name="com.ssf.edog.receiver.LaunchKeyguardReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.ssf.edog.LAUNCH_KEYGUAND_ACTION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

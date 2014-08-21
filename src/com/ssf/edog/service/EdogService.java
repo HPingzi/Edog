@@ -4,13 +4,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-
 import com.ssf.edog.config.Config;
 import com.ssf.edog.util.SharedPreferenceUtil;
 
@@ -20,6 +21,24 @@ public class EdogService extends Service {
 	private ActivityManager mActivityManager;
 	private SharedPreferenceUtil mPreferenceUtil;
 	private ScheduledExecutorService mExecutorService;
+	private static final int SUCCESS = 1;
+
+	@SuppressLint("HandlerLeak")
+	private Handler mHandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+
+			switch (msg.what) {
+			case SUCCESS:
+				Intent intent = new Intent(Config.LAUNCH_KEYGUAGRD_ACTION);
+				sendBroadcast(intent);
+				break;
+
+			default:
+				break;
+			}
+
+		};
+	};
 
 	@Override
 	public void onCreate() {
@@ -39,7 +58,7 @@ public class EdogService extends Service {
 
 			@Override
 			public void run() {
-				Log.i("kevin","success");
+				Log.i("kevin", "success");
 
 				// 得到当前正在前台运行的应用程序包名
 				String runingBagName = mActivityManager.getRunningTasks(1).get(
@@ -48,6 +67,7 @@ public class EdogService extends Service {
 				// 如果当前所要监听的程序正在前台运行则不用执行后续代码
 
 				if (runingBagName.equals(Config.PACKAGE_NAME)) {
+					mPreferenceUtil.setEnable(true);
 					return;
 				}
 
@@ -55,13 +75,14 @@ public class EdogService extends Service {
 				if (runingBagName.equals(mCurrentPackageName)) {
 					return;
 				}
-
 				// 所要监听的程序不在前台运行，切换到该程序
 
-				Intent intent = mPackageManager
-						.getLaunchIntentForPackage(Config.PACKAGE_NAME);
-
-				startActivity(intent);
+				// Intent intent = mPackageManager
+				// .getLaunchIntentForPackage(Config.PACKAGE_NAME);
+				// startActivity(intent);
+				if (mPreferenceUtil.isEnable()) {
+					mHandler.sendEmptyMessage(SUCCESS);
+				}
 
 			}
 		}, 0, mPreferenceUtil.getInterval(), TimeUnit.SECONDS);

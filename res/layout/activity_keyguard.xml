@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/bottom_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" >
+
+            <TextView
+                android:id="@+id/info"
+                style="@style/TitleFont" />
+
+            <LinearLayout
+                android:id="@+id/pwd_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/info"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <EditText
+                    android:id="@+id/password_text"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:hint="@string/pwd_hint"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:src="@drawable/clear"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:src="@drawable/clear" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/enter_home"
+                style="@style/ButtonFont"
+                android:layout_below="@+id/pwd_container"
+                android:layout_centerHorizontal="true"
+                android:text="@string/enter_home" >
+            </Button>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/bottom_layout" />
+
+</LinearLayout>

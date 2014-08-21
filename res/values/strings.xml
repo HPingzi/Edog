@@ -50,5 +50,7 @@
     <string name="second_than_three_large">"嗅探频率不能小于3秒/次"</string>
     <string name="setting_success">设置成功</string>
     <string name="close_timing_option">已关闭定时选项</string>
+    <string name="title_activity_keyguard">KeyguardActivity</string>
+    <string name="enter_home">进入Home</string>
 
 </resources>
