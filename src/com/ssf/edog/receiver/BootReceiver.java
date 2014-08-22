@@ -38,7 +38,7 @@ public class BootReceiver extends BroadcastReceiver {
 
 		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
-			if (mPreferenceUtil.isEnable()) {
+			if (mPreferenceUtil.isSwitch()) {
 				context.startService(new Intent(context, EdogService.class));
 			}
 
