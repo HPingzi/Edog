@@ -7,6 +7,7 @@
     <string name="enter_settings">进入设置</string>
     <string name="save_settings">保存设置</string>
     <string name="pwd_hint">请输入管理员密码进入选项设置</string>
+    <string name="pwd_hint_two">请输入退出密码</string>
     <string name="error_display">对不起，密码错误请重试。</string>
     <string name="on_edog">电子狗已打开</string>
     <string name="off_edog">电子狗已关闭</string>
@@ -47,12 +48,17 @@
     <string name="password_can_not_null">密码不能为空</string>
     <string name="password_must_than_length_than_four_big">密码长度不能小于4</string>
     <string name="confirm">确定</string>
+    <string name="exit">退出</string>
     <string name="second_than_three_large">"嗅探频率不能小于3秒/次"</string>
     <string name="setting_success">设置成功</string>
     <string name="close_timing_option">已关闭定时选项</string>
     <string name="title_activity_keyguard">KeyguardActivity</string>
     <string name="enter_home">进入Home</string>
-    <string name="alert_display">还有%1$02d秒将重启普及管家！如果你想执行其它操作请输入密码！</string>
+    <string name="alert_display">%1$02d</string>
     <string name="time_format">%1$02d：%2$02d</string>
+    <string name="use_prompt1">1、请输入退出密码返回主界面;</string>
+    <string name="use_prompt2">2、如30秒内未退出，将重启\"普及交互媒体机\"应用</string>
+    <string name="use_prompt3">3、如媒体机停留在此界面，请联系物业进行处理。</string>
+    <string name="prompt">提示</string>
 
 </resources>

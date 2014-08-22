@@ -11,4 +11,6 @@ public class Config {
 
 	public static final String LAUNCH_KEYGUAGRD_ACTION = "com.ssf.edog.LAUNCH_KEYGUAND_ACTION";
 
+	public static final int WAIT_REBOOT_TIME = 30;
+
 }

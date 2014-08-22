@@ -5,6 +5,12 @@ import java.util.Calendar;
 public class TimeUtils {
 
 
+	/**
+	 * 计算从现在到
+	 * @param hour
+	 * @param minute
+	 * @return
+	 */
 	public static long calculateRebootTime(int hour, int minute) {
 
 		Calendar calendar = Calendar.getInstance();

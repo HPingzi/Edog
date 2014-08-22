@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ssf.edog.config.Config;
@@ -30,6 +31,7 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 	private Button mEnterHomeBtn;
 	private EditText mPwdText;
 	private SharedPreferenceUtil mPreferenceUtil;
+	private ImageView mFinishBtn;
 
 	protected PackageManager mPackageManager;
 
@@ -74,6 +76,8 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 		mEnterHomeBtn = (Button) findViewById(R.id.enter_home);
 		mEnterHomeBtn.setOnClickListener(this);
 		mPwdText = (EditText) findViewById(R.id.password_text);
+		mFinishBtn = (ImageView) findViewById(R.id.finish);
+		mFinishBtn.setOnClickListener(this);
 
 	}
 
@@ -81,7 +85,7 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 	protected void onResume() {
 
 		super.onResume();
-		time = 10;// 初始化等待用户输入的时间
+		time = Config.WAIT_REBOOT_TIME;// 初始化等待用户输入的时间
 		mHandler.sendEmptyMessageDelayed(SUCESS, 1000);// 启动计时器
 	}
 
@@ -115,7 +119,18 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
-		verifyPassword();
+		switch (v.getId()) {
+		case R.id.enter_home:
+			verifyPassword();
+			break;
+		case R.id.finish:
+			Intent intent = mPackageManager
+					.getLaunchIntentForPackage(Config.PACKAGE_NAME);
+			startActivity(intent);
+			finish();
+		default:
+			break;
+		}
 
 	}
 }
