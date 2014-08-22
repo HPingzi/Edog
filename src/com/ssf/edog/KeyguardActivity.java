@@ -16,9 +16,14 @@ import android.widget.TextView;
 import com.ssf.edog.config.Config;
 import com.ssf.edog.util.SharedPreferenceUtil;
 
+/**
+ * 
+ * @author Administrator
+ * 
+ */
 public class KeyguardActivity extends Activity implements OnClickListener {
 
-	private int time = 0;
+	private int time = 0;// 等待用户输入密码的时间
 	private static final int SUCESS = 1;
 
 	private TextView mPromptTv;
@@ -34,11 +39,12 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 
 			if (msg.what == SUCESS) {
 
-				if (time != 0) {
-					mPromptTv.setText("还有" + (time--)
-							+ "秒将重启普及管家！如果你想执行其它操作请输入密码！");
+				if (time != 0) {// 等待用户输入密码的时间还未结束，提示用户输入密码
+					mPromptTv.setText(String.format(
+							getResources().getString(R.string.alert_display),
+							time--));
 					mHandler.sendEmptyMessageDelayed(1, 1000);
-				} else {
+				} else {// 等待用户输入密码的时间已结束,启动普及管家
 
 					Intent intent = mPackageManager
 							.getLaunchIntentForPackage(Config.PACKAGE_NAME);
@@ -60,6 +66,9 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 		initView();
 	}
 
+	/**
+	 * 初始化UI组件
+	 */
 	private void initView() {
 		mPromptTv = (TextView) findViewById(R.id.info);
 		mEnterHomeBtn = (Button) findViewById(R.id.enter_home);
@@ -72,17 +81,20 @@ public class KeyguardActivity extends Activity implements OnClickListener {
 	protected void onResume() {
 
 		super.onResume();
-		time = 10;
-		mHandler.sendEmptyMessageDelayed(SUCESS, 1000);
+		time = 10;// 初始化等待用户输入的时间
+		mHandler.sendEmptyMessageDelayed(SUCESS, 1000);// 启动计时器
 	}
 
 	@Override
 	protected void onPause() {
 
 		super.onPause();
-		mHandler.removeMessages(SUCESS);
+		mHandler.removeMessages(SUCESS);// 停止计时
 	}
 
+	/**
+	 * 验证用户输入的密码是否正确，如果正确取消打开普及管家，否则提示错误信息
+	 */
 	public void verifyPassword() {
 
 		String pwd = mPwdText.getText().toString().trim();

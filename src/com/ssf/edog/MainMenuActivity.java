@@ -43,13 +43,13 @@ public class MainMenuActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.on_off_btn:
-			openActivity(TimeSettingActivity.class);
+			openActivity(TimeSettingActivity.class);// 进入定时开关机设置
 			break;
 		case R.id.edog_seting_btn:
-			openActivity(SettingActivity.class);
+			openActivity(SettingActivity.class);// 进入电子狗设置
 			break;
 		case R.id.modify_pwd_setting_btn:
-			openActivity(ModifyActivity.class);
+			openActivity(ModifyActivity.class);// 进入密码设置
 			break;
 		case R.id.finish:
 			finish();

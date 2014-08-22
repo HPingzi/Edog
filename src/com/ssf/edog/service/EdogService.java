@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -16,8 +15,8 @@ import com.ssf.edog.config.Config;
 import com.ssf.edog.util.SharedPreferenceUtil;
 
 public class EdogService extends Service {
+
 	private String mCurrentPackageName;
-	private PackageManager mPackageManager;
 	private ActivityManager mActivityManager;
 	private SharedPreferenceUtil mPreferenceUtil;
 	private ScheduledExecutorService mExecutorService;
@@ -43,7 +42,7 @@ public class EdogService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mPackageManager = getPackageManager();
+		getPackageManager();
 		mCurrentPackageName = getPackageName();
 		mPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
 		mActivityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
@@ -58,7 +57,6 @@ public class EdogService extends Service {
 
 			@Override
 			public void run() {
-				Log.i("kevin", "success");
 
 				// 得到当前正在前台运行的应用程序包名
 				String runingBagName = mActivityManager.getRunningTasks(1).get(

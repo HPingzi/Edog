@@ -76,12 +76,6 @@
             android:label="@string/title_activity_time_setting" >
         </activity>
 
-        <service
-            android:name=".service.SwitchService"
-            android:enabled="true"
-            android:exported="false" >
-        </service>
-
         <activity
             android:name=".KeyguardActivity"
             android:label="@string/title_activity_keyguard" >

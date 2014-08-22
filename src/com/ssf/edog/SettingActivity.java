@@ -17,11 +17,11 @@ import com.ssf.edog.util.SharedPreferenceUtil;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
-	private ToggleButton mToggleButton;
-	private EditText mIntervalText;
-	private Button mSaveSettingBtn;
-	private ImageView mFinishBtn;
-	private SharedPreferenceUtil mPreferenceUtil;
+	private ToggleButton mToggleButton;// 电子狗开关按钮
+	private EditText mIntervalText;// 用于输入电子狗嗅探时间间隔的文本框
+	private Button mSaveSettingBtn;// 保存用户设置的按钮
+	private ImageView mFinishBtn;// 退出本设置界面的按钮
+	private SharedPreferenceUtil mPreferenceUtil;// 保存用户设置数据的工具类
 
 	private AlertDialog mAlertDialog;
 
@@ -34,6 +34,9 @@ public class SettingActivity extends Activity implements OnClickListener {
 		initView();
 	}
 
+	/**
+	 * 初始化UI组件
+	 */
 	public void initView() {
 
 		mToggleButton = (ToggleButton) findViewById(R.id.toogle);
@@ -53,6 +56,9 @@ public class SettingActivity extends Activity implements OnClickListener {
 				.setTitle(getString(R.string.info_prompt_title)).create();
 	}
 
+	/**
+	 * 保存用户设置
+	 */
 	public void saveSetting() {
 
 		String intervalStr = mIntervalText.getText().toString().trim();

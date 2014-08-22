@@ -19,8 +19,8 @@ public class ModifyActivity extends Activity implements OnClickListener {
 
 	private ImageView mFinishBtn;// 退出程序按钮
 
-	private String mOldPwd;
-	private String mNewPwd;
+	private String mOldPwd;// 旧密码
+	private String mNewPwd;// 新密码
 
 	private AlertDialog mAlertDialog;
 
@@ -34,6 +34,9 @@ public class ModifyActivity extends Activity implements OnClickListener {
 		initView();
 	}
 
+	/**
+	 * 初始化UI组件
+	 */
 	private void initView() {
 
 		mOldPwdEdt = (EditText) findViewById(R.id.old_pwd);
@@ -82,6 +85,12 @@ public class ModifyActivity extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * 验证用户输入的旧密码是否正确
+	 * 
+	 * @param pwd
+	 * @return
+	 */
 	private boolean verifyOldPassword(String pwd) {
 
 		if (pwd != null && pwd.equals(mPreferenceUtil.getPassword())) {
@@ -94,6 +103,12 @@ public class ModifyActivity extends Activity implements OnClickListener {
 		return false;
 	}
 
+	/**
+	 * 验证用户输入的新密码是否满足指定条件
+	 * 
+	 * @param newPwd
+	 * @return
+	 */
 	private boolean verifyNewPassword(String newPwd) {
 
 		if (newPwd == null || "".equals(newPwd)) {

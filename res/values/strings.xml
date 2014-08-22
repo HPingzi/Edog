@@ -52,5 +52,7 @@
     <string name="close_timing_option">已关闭定时选项</string>
     <string name="title_activity_keyguard">KeyguardActivity</string>
     <string name="enter_home">进入Home</string>
+    <string name="alert_display">还有%1$02d秒将重启普及管家！如果你想执行其它操作请输入密码！</string>
+    <string name="time_format">%1$02d：%2$02d</string>
 
 </resources>

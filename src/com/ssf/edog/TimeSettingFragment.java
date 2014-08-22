@@ -29,31 +29,31 @@ import com.ssf.edog.util.TimeUtils;
 public class TimeSettingFragment extends Fragment implements OnClickListener,
 		OnItemSelectedListener, MachineUtil.OnStateListener {
 
-	private Spinner mSpinner;
+	private Spinner mSpinner;// 定时选项菜单
 
-	private TextView mOnTimeBtn;
+	private TextView mOnTimeBtn; // 显示开机时间或重启时间
 	private TextView mOnTimeLable;
 
-	private TextView mOffTimeBtn;
+	private TextView mOffTimeBtn;// 显示关机时间
 	private TextView mOffTimeLabel;
 
-	private View mOnTimeContainer;
-	private View mOffTimeContainer;
+	private View mOnTimeContainer;// 开机时间控件容器
+	private View mOffTimeContainer;// 关机时间控件容器
 
-	private TimePickerDialog mPickOnTimeDialog;
-	private TimePickerDialog mPickOffTimeDialog;
+	private TimePickerDialog mPickOnTimeDialog;// 用来设置开机时间的对话框
+	private TimePickerDialog mPickOffTimeDialog;// 用来设置关机时间的对话框
 
-	private Button mSaveSettingBtn;
+	private Button mSaveSettingBtn;// 保存用户设置的按钮
 
-	private TextView mAlertTextView;
+	private TextView mAlertTextView;// 用于提示用于错误信息的文本域
 
-	private SharedPreferenceUtil mPreferenceUtil;
+	private SharedPreferenceUtil mPreferenceUtil;// 保存用户设置数据的工具类的实例
 
 	private AlarmManager mAlarmManager;
 
 	private AlertDialog mAlertDialog;
 
-	MachineUtil mMachineUtil;
+	MachineUtil mMachineUtil;// 定时开关机工具类的实例
 
 	/**
 	 * 开机时间
@@ -120,7 +120,9 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 						mOnHour = hourOfDay;
 						mOnMinute = minute;
 
-						mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
+						mOnTimeBtn.setText(String.format(
+								getString(R.string.time_format), mOnHour,
+								mOnMinute));
 
 					}
 				}, mOnHour, mOnMinute, true);
@@ -135,8 +137,9 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 						mOffHour = hourOfDay;
 						mOffMinute = minute;
 
-						mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
-
+						mOffTimeBtn.setText(String.format(
+								getString(R.string.time_format), mOffHour,
+								mOffMinute));
 					}
 				}, mOffHour, mOffMinute, true);
 
@@ -219,16 +222,16 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mOffHour = mPreferenceUtil.getOffHour();
 			mOffMinute = mPreferenceUtil.getOffMinute();
 
-			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
-
+			mOffTimeBtn.setText(String.format(getString(R.string.time_format),
+					mOffHour, mOffMinute));
 			break;
 		case SharedPreferenceUtil.AUTO_REBOOT:
 
 			mOnHour = mPreferenceUtil.getRebootHour();
 			mOnMinute = mPreferenceUtil.getRebootMinute();
 
-			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
-
+			mOnTimeBtn.setText(String.format(getString(R.string.time_format),
+					mOnHour, mOnMinute));
 			break;
 		case SharedPreferenceUtil.AUTO_ON_OFF:
 
@@ -238,9 +241,10 @@ public class TimeSettingFragment extends Fragment implements OnClickListener,
 			mOffHour = mPreferenceUtil.getOffHour();
 			mOffMinute = mPreferenceUtil.getOffMinute();
 
-			mOnTimeBtn.setText(mOnHour + " : " + mOnMinute);
-			mOffTimeBtn.setText(mOffHour + " : " + mOffMinute);
-
+			mOffTimeBtn.setText(String.format(getString(R.string.time_format),
+					mOffHour, mOffMinute));
+			mOnTimeBtn.setText(String.format(getString(R.string.time_format),
+					mOnHour, mOnMinute));
 			break;
 
 		default:

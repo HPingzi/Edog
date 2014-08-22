@@ -4,38 +4,6 @@ import java.util.Calendar;
 
 public class TimeUtils {
 
-	/**
-	 * 设置开机时间跟关机时间
-	 * 
-	 * @param onHour
-	 * @param onMinute
-	 * @param offHour
-	 * @param offMinute
-	 */
-	public void setOnOFFTime(int onHour, int onMinute, int offHour,
-			int offMinute) {
-
-	}
-
-	/**
-	 * 设置重启时间
-	 * 
-	 * @param rebootHour
-	 * @param rebootMinute
-	 */
-	public void setRebootTime(int rebootHour, int rebootMinute) {
-
-	}
-
-	/**
-	 * 设置关机时间
-	 * 
-	 * @param offHour
-	 * @param offMinute
-	 */
-	public void setOffTime(int offHour, int offMinute) {
-
-	}
 
 	public static long calculateRebootTime(int hour, int minute) {
 
