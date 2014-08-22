@@ -34,7 +34,6 @@ public class BootReceiver extends BroadcastReceiver {
 		Intent newIntent = new Intent(Config.SWITCH_ACTION);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
 				newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		mAlarmManager.cancel(pendingIntent);
 
 		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
